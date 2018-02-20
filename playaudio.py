@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import pyaudio
-CHUNK=1024
-RATE=44000
+CHUNK=128
+RATE=16000
 p=pyaudio.PyAudio()
 stream=p.open(	format = pyaudio.paInt16,
 		channels = 2,
