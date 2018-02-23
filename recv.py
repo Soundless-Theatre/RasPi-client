@@ -1,18 +1,23 @@
 from socket import *
 import sys 
 import playaudio
-from multiprocessing import Process
+from multiprocessing import Process,Queue
 HOST = ""
 PORT = 5008
 s = socket(AF_INET,SOCK_DGRAM)
 s.bind((HOST,PORT))
 
+def recv(q):
+    msg,address=s.recvfrom(8192)
+    q.put(msg)
 if __name__=="__main__":
     msg, address = s.recvfrom(8192)
     while True:
-        p=Process(target=(playaudio.play),args=(msg,))
+        q=Queue()
+        p=Process(target=recv,args=(q,))
         p.start()
-        msg, address = s.recvfrom(8192)
+        playaudio.play(msg)
+        msg=q.get()
         p.join()
 s.close()
 sys.exit()
