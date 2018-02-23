@@ -8,6 +8,6 @@ stream=p.open(	format = pyaudio.paInt16,
 		rate = RATE,
 		frames_per_buffer = CHUNK,
 		input = False,
-		output = True) # inputとoutputを同時にTrueにする
+		output = True)
 def play(sau):
     output = stream.write(sau)
