@@ -1,7 +1,7 @@
 import pyaudio
 from socket import *
 import sys 
-from multiprocessing import Process,Queue
+from threading import Thread
 
 frames=[]
 
@@ -30,8 +30,10 @@ stream=p.open(format = pyaudio.paInt16,
               output = True)
 
 if __name__=="__main__":
-    p1=Process(target=recv)
-    p2=Process(target=play,args=(stream,))
+    p1=Thread(target=recv)
+    p2=Thread(target=play,args=(stream,))
+    p1.setDaemon(True)
+    p2.setDaemon(True)
     p1.start()
     p2.start()
     p1.join()
