@@ -19,7 +19,7 @@ def play(stream):
         if len(frames) > 0:
             stream.write(frames.pop())
 
-CHUNK=128
+CHUNK=1024
 RATE=16000
 p=pyaudio.PyAudio()
 stream=p.open(format = pyaudio.paInt16,
