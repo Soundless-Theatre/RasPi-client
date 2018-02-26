@@ -8,9 +8,21 @@ PORT = 5008
 s = socket(AF_INET,SOCK_DGRAM)
 s.bind((HOST,PORT))
 
-def recv(q):
-    msg,address=s.recvfrom(8192)
-    q.put(msg)
+frames=[]
+
+def recv():
+    HOST = ""
+    PORT = 5008
+    s = socket(AF_INET,SOCK_DGRAM)
+    s.bind((HOST,PORT))
+    while True:
+        msg,address=s.recvfrom(8192)
+        frames.append(msg)
+
+def play(stream):
+    while True:
+        if len(frames) > 0:
+            stream.write(frames.pop())
 
 CHUNK=128
 RATE=16000
@@ -23,13 +35,11 @@ stream=p.open(format = pyaudio.paInt16,
               output = True)
 
 if __name__=="__main__":
-    msg, address = s.recvfrom(8192)
-    while True:
-        q=Queue()
-        p=Process(target=recv,args=(q,))
-        p.start()
-        stream.write(msg)
-        msg=q.get()
-        p.join()
+    p1=Process(target=recv)
+    p2=Process(target=play,args=(stream,))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
 s.close()
 sys.exit()
