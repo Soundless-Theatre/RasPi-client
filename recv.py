@@ -3,11 +3,6 @@ from socket import *
 import sys 
 from multiprocessing import Process,Queue
 
-HOST = ""
-PORT = 5008
-s = socket(AF_INET,SOCK_DGRAM)
-s.bind((HOST,PORT))
-
 frames=[]
 
 def recv():
