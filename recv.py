@@ -15,8 +15,9 @@ def recv(q):
 CHUNK=128
 RATE=16000
 p=pyaudio.PyAudio()
-stream=p.open( format = pyaudio.paInt16,
+stream=p.open(format = pyaudio.paInt16,
               channels = 2,
+              rate = RATE,
               frames_per_buffer = CHUNK,
               input = False,
               output = True)
