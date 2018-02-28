@@ -4,6 +4,7 @@ import json
 from flask import Flask, request
 import connect
 
+l=lis.list()
 f = open("./input.json")
 data = f.read()
 f.close()
@@ -11,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/list")
 def index():
-        lis.list.getcmd()
+        l.getcmd()
         f = open("./input.json")
         data = f.read()
         f.close()
