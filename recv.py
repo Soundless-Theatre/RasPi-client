@@ -18,7 +18,7 @@ def recv():
 def play(stream):
     while True:
         if len(frames) > 0:
-            stream.write(frames.pop(0))
+            stream.write(frames.pop())
 
 CHUNK=1024
 RATE=16000
