@@ -1,9 +1,10 @@
+from collections import  deque
 import pyaudio
 from socket import *
 import sys 
 from threading import Thread
 
-frames=[]
+frames=deque()
 
 def recv():
     HOST = ""
