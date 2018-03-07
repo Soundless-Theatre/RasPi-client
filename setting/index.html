@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang = "ja">
+<html>
+<head>
+<meta charset = "utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />  
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="index.css">
+<title>Soundless-Theatresetting</title>
+<script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div id="wifiset">
+        <h2>wifi設定</h2>
+    </div>
+    <script>
+        $(function(){
+            var url="http://192.168.12.1:5000"
+            $.ajax({
+                type:"get",
+                url: url+"/list", 
+                dataType:"json",
+            }).done(function(data){
+                var l = Object.keys(data).length;
+                for(let i=0;i<l;i++){
+                    var ssid=data[i].SSID;
+                    var power=data[i].POWER;
+                    $(
+                        "<div class='wifi"+String(i%2)+"' id='"+ssid+"'>"+
+                        "<img src='./img/wifi"+power+".png' class='wifisimg' >" +
+                        "<center>"+ssid+"</center>"+
+                        "<hr></div>"
+                    ).appendTo("div#wifiset")
+                }
+            });
+            $(document).on("click",".wifi0",function(){
+                var ssid=$(this).attr("id");
+                var pass=window.prompt("wifiのpasswordを入力してください");
+                if (pass.length !== 0){
+                    alert("wifiに接続します");
+                    $.ajax({
+                        type:"post",
+                        url:url+"/connect",
+                        dataType:"json",
+                        data:{"ssid":ssid,"pass":pass}
+                    })
+                }
+            });
+            $(document).on("click",".wifi1",function(){
+                var ssid=$(this).attr("id");
+                var pass=window.prompt("wifiのpasswordを入力してください");
+                if (pass.length !== 0){
+                    alert("wifiに接続します");
+                    $.ajax({
+                        type:"post",
+                        url:url+"/connect",
+                        dataType:"json",
+                        data:{"id":ssid,"pass":pass}
+                    })
+                }
+            });
+        });
+    </script>
+</body>
+</html>
