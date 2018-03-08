@@ -36,6 +36,7 @@ do
                 python3 /home/pi/workspace/RasPi-client/launch/led_red.py &
                 mode="set"
             else
+                killall python3
                 killall create_ap
                 sleep 5 
                 nmcli dev connect wlan0
